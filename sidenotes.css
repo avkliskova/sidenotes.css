@@ -1,0 +1,134 @@
+:root {
+  /* Modify these */
+  --mobile-article-width: 95%;
+  --desktop-article-width: 900px; /* Mobile breakpoint. If you modify this, also change the @media directive below. */
+  --content-proportion: .65;
+  --sidenote-proportion: .3;
+  --gutter-proportion: calc(1 - var(--content-proportion) - var(--sidenote-proportion));
+  --indent: 40px;
+  --sidenote-font-size: 0.85rem;
+
+  --marginnote-label-1: '*';
+  --marginnote-label-2: '\2020';
+  --marginnote-label-3: '\2021';
+
+
+  /* Leave this alone */
+  --article-width: var(--mobile-article-width);
+}
+
+article {
+  width: var(--article-width);
+
+  counter-reset: sidenote;
+}
+
+.sidenote,
+.marginnote {
+  display: none;
+
+  /* Need these for sidenotes inside b, em, headings... */
+  font-weight: normal;
+  font-size: var(--sidenote-font-size);
+}
+
+.sidenote-label,
+.sidenote::before,
+.marginnote-label:nth-of-type(2)::before,
+.marginnote:nth-of-type(2)::before,
+.marginnote-label:nth-of-type(3)::before,
+.marginnote:nth-of-type(3)::before
+{
+  font-size: 0.7rem;
+  vertical-align: top;
+
+  font-weight: normal;
+}
+
+.sidenote-label::before {
+  counter-increment: sidenote;
+}
+
+.sidenote-label::before,
+.sidenote::before {
+  content: counter(sidenote);
+  content: counter(sidenote);
+}
+
+.sidenote::before,
+.marginnote::before {
+  margin-right: 0.7ch;
+}
+
+.marginnote-label::before,
+.marginnote::before {
+  counter-increment: none;
+}
+
+.marginnote-label:nth-of-type(1)::before,
+.marginnote:nth-of-type(1)::before {
+  content: var(--marginnote-label-1);
+}
+
+.marginnote-label:nth-of-type(2)::before,
+.marginnote:nth-of-type(2)::before {
+  content: var(--marginnote-label-2);
+}
+
+.marginnote-label:nth-of-type(3)::before,
+.marginnote:nth-of-type(3)::before {
+  content: var(--marginnote-label-3);
+}
+
+.note-toggle {
+  display: none;
+}
+
+.note-toggle:checked + .sidenote,
+.note-toggle:checked + .marginnote {
+    display: block;
+    float: left;
+    clear: both;
+    width: 95%;
+    margin-block: 0.4rem;
+    margin-inline: 1rem;
+}
+
+@media screen and (min-width: 900px) { /* Modify this directive to change the mobile breakpoint. Also change --desktop-article-width. */
+  :root {
+    --article-width: var(--desktop-article-width);
+  }
+
+  article > * {
+    width: calc(var(--content-proportion) * 100%);
+  }
+
+  article pre {
+    white-space: pre-wrap;
+    /* width: 100%;  /* Uncomment this to use full-width <pre> */
+  }
+
+  article > dl,
+  article > ul,
+  article > ol {
+    padding-inline-start: var(--indent);
+    width: calc(var(--content-proportion) * 100% - var(--indent));
+  }
+
+  article > blockquote {
+    margin-inline: var(--indent);
+    width: calc(var(--content-proportion) * 100% - var(--indent));
+  }
+
+  .sidenote,
+  .marginnote,
+  .note-toggle:checked + .sidenote,
+  .note-toggle:checked + .marginnote {
+    display: inline-block;
+    float: right;
+    clear: right;
+    width: calc(var(--sidenote-proportion) * var(--article-width));
+    margin-right: calc((var(--content-proportion) - 1) * var(--article-width));
+    margin-top: 0.3rem;
+  }
+}
