@@ -1,0 +1,68 @@
+@charset "UTF-8";
+article {
+  counter-reset: sidenote; }
+
+.sidenote, .marginnote {
+  font-weight: initial;
+  font-style: initial;
+  font-size: 83.3333%;
+  position: relative;
+  display: none; }
+
+input[type="checkbox"].margin-toggle {
+  display: none; }
+
+.sidenote-number::before, .sidenote-label::before {
+  counter-increment: sidenote;
+  content: counter(sidenote); }
+
+#toc .sidenote-number::before, #toc .sidenote-label::before {
+  counter-increment: none;
+  content: ""; }
+
+.margin-toggle:checked + .sidenote, .margin-toggle:checked + .marginnote, .note-toggle:checked + .sidenote, .note-toggle:checked + .marginnote {
+  display: block;
+  width: 100%;
+  float: left;
+  clear: both;
+  margin-block: 0.3rem;
+  margin-inline: 1rem; }
+
+.sidenote::before, .marginnote::before {
+  position: absolute;
+  right: calc(100% + 10px); }
+
+.sidenote::before {
+  content: counter(sidenote); }
+
+.marginnote-number:nth-of-type(1)::before, .marginnote:nth-of-type(1)::before {
+  content: "*"; }
+
+.marginnote-number:nth-of-type(2)::before, .marginnote:nth-of-type(2)::before {
+  content: "†"; }
+
+.marginnote-number:nth-of-type(3)::before, .marginnote:nth-of-type(3)::before {
+  content: "‡"; }
+
+.marginnote.nonumber::before {
+  content: ''; }
+
+.sidenote-number {
+  font-feature-settings: "sups";
+  font-variant-numeric: proportional-nums; }
+
+.marginnote-number:nth-of-type(2)::before,
+.marginnote-number:nth-of-type(3)::before {
+  vertical-align: super;
+  font-size: smaller;
+  line-height: 1; }
+
+@media (min-width: 1494px) {
+  .sidenote, .margin-toggle:checked + .sidenote, .marginnote, .margin-toggle:checked + .marginnote, .marginfigure, .margin-toggle:checked + .marginfigure {
+    display: block;
+    float: right;
+    clear: right;
+    width: 280px;
+    margin-right: -340px;
+    margin-block-start: 0;
+    margin-block-end: 0.3rem; } }
