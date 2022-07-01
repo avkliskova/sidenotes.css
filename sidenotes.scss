@@ -1,0 +1,96 @@
+@import 'variables';
+
+$marginnote-glyphs: (1: '*', 2: '\2020', 3: '\2021');
+
+article {
+  counter-reset: sidenote;
+}
+
+.sidenote, .marginnote {
+  font-weight: initial;
+  font-style: initial;
+  font-size: $side-size;
+  position: relative;
+  display: none;
+}
+
+input[type="checkbox"].margin-toggle {
+  display: none;
+}
+
+.sidenote-number, .sidenote-label {
+  &::before {
+    counter-increment: sidenote;
+    content: counter(sidenote);
+  }
+}
+
+#toc {
+  .sidenote-number, .sidenote-label {
+    &::before {
+      counter-increment: none;
+      content: "";
+    }
+  }
+}
+
+.margin-toggle:checked, .note-toggle:checked {
+  + .sidenote, + .marginnote {
+    display: block;
+    width: 100%;
+    float: left;
+    clear: both;
+    margin-block: 0.3rem;
+    margin-inline: 1rem;
+  }
+}
+
+.sidenote, .marginnote {
+  &::before {
+    position: absolute;
+    right: calc(100% + 10px);
+  }
+}
+
+.sidenote::before {
+  content: counter(sidenote);
+}
+
+@each $index, $glyph in $marginnote-glyphs {
+  .marginnote-number, .marginnote {
+    &:nth-of-type(#{$index})::before {
+      content: $glyph;
+    }
+  }
+}
+
+.marginnote.nonumber::before {
+  content: '';
+}
+
+.sidenote-number {
+  font-feature-settings: "sups";
+  font-variant-numeric: proportional-nums;
+}
+
+.marginnote-number:nth-of-type(2)::before,
+.marginnote-number:nth-of-type(3)::before
+{
+  vertical-align: super;
+  font-size: smaller;
+  line-height: 1;
+}
+
+@media (min-width: #{$mobile-breakpoint}) {
+  .sidenote, .marginnote, .marginfigure {
+    &, .margin-toggle:checked + & {
+      display: block;
+      float: right;
+      clear: right;
+      width: $sidebar-width;
+      margin-right: -($gutter-width + $sidebar-width);
+      margin-block-start: 0;
+      margin-block-end: 0.3rem;
+    }
+  }
+}

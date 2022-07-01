@@ -1,0 +1,12 @@
+$line-width: 750px;
+
+$gutter-width: 60px;
+
+$sidebar-width: 280px;
+$side-size: 83.3333%;
+
+$padding: 32px;
+
+$body-width: ($padding + $sidebar-width + $gutter-width + $line-width + $gutter-width + $sidebar-width + $padding);
+
+$mobile-breakpoint: $body-width;
